@@ -66,15 +66,12 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.1)
-      public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     bcrypt (3.1.18)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
     concurrent-ruby (1.2.2)
-    content_disposition (1.0.0)
     crass (1.0.6)
     date (3.3.3)
     debug (1.7.1)
@@ -86,17 +83,11 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    down (5.4.0)
-      addressable (~> 2.8)
     erubi (1.12.0)
-    ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    image_processing (1.12.2)
-      mini_magick (>= 4.9.5, < 5)
-      ruby-vips (>= 2.0.17, < 3)
     io-console (0.6.0)
     irb (1.6.2)
       reline (>= 0.3.0)
@@ -111,7 +102,6 @@ GEM
       net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
-    mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.17.0)
     msgpack (1.6.0)
@@ -132,7 +122,6 @@ GEM
     parser (3.2.1.0)
       ast (~> 2.4.1)
     pg (1.4.6)
-    public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.6.2)
@@ -189,11 +178,6 @@ GEM
     rubocop-ast (1.27.0)
       parser (>= 3.2.1.0)
     ruby-progressbar (1.12.0)
-    ruby-vips (2.1.4)
-      ffi (~> 1.12)
-    shrine (3.4.0)
-      content_disposition (~> 1.0)
-      down (~> 5.1)
     thor (1.2.1)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -210,16 +194,15 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  activestorage (~> 7.0, >= 7.0.4.2)
   bootsnap
   debug
   devise
-  image_processing (~> 1.8)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.2)
   rubocop (>= 1.0, < 2.0)
-  shrine (~> 3.0)
   tzinfo-data
 
 RUBY VERSION

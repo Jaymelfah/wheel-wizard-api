@@ -1,27 +1,27 @@
 class Api::V1::CarsController < ApplicationController
   def index
-    @cars = Car.all
-    render json: @cars, status: :ok
+    @cars = Car.with_attached_image.all
+    render json: @cars.map { |car| car.as_json.merge(image_url: url_for(car.image)) }, status: :ok
   end
 
   def show
-    @car = Car.where(id: params[:id])
-    render json: @car, status: :ok
+    @car = Car.with_attached_image.find(params[:id])
+    render json: @car.as_json.merge(image_url: url_for(@car.image)), status: :ok
   end
 
-#   def create
-#     @car = Car.new(car_params)
+  #   def create
+  #     @car = Car.new(car_params)
 
-#     if @car.save
-#       render json: @car, status: :created
-#     else
-#       render json: @car.errors, status: :unprocessable_entity
-#     end
-#   end
+  #     if @car.save
+  #       render json: @car, status: :created
+  #     else
+  #       render json: @car.errors, status: :unprocessable_entity
+  #     end
+  #   end
 
-#   private
+  #   private
 
-#   def car_params
-#     params.require(:car).permit(:name, :description, :price, :test_drive_fee, :model, :year, :image_data)
-#   end
+  #   def car_params
+  #     params.require(:car).permit(:name, :description, :price, :test_drive_fee, :model, :year, :image_data)
+  #   end
 end
