@@ -18,6 +18,11 @@ gem 'puma', '~> 5.0'
 # Add authentication
 gem 'devise'
 
+# Add shrine for file uploads
+gem 'shrine', '~> 3.0'
+
+gem "image_processing", '~> 1.8'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 

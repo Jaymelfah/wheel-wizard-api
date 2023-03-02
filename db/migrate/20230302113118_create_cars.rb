@@ -7,7 +7,7 @@ class CreateCars < ActiveRecord::Migration[7.0]
       t.float :test_drive_fee
       t.string :model
       t.date :year
-      t.binary :image_data
+      t.json :image_data, null: false, default: {}
 
       t.timestamps
     end

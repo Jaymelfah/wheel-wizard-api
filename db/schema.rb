@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_114025) do
     t.float "test_drive_fee"
     t.string "model"
     t.date "year"
-    t.binary "image_data"
+    t.json "image_data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
