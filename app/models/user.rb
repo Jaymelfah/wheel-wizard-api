@@ -6,4 +6,10 @@ class User < ApplicationRecord
   
   has_many :reservations, dependent: :destroy
   has_many :cars, through: :reservations
+
+  validates :name, :email, presence: true
+
+  def admin?
+    role == 'admin'
+  end
 end
