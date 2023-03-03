@@ -18,6 +18,9 @@ gem 'puma', '~> 5.0'
 # Add authentication
 gem 'devise'
 
+# Add active storage
+gem 'activestorage', '~> 7.0', '>= 7.0.4.2'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 

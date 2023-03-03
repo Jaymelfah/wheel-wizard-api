@@ -194,6 +194,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  activestorage (~> 7.0, >= 7.0.4.2)
   bootsnap
   debug
   devise
