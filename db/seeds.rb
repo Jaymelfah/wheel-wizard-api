@@ -18,3 +18,4 @@ car4.save
 car5 = Car.new(name: "renault", description: "family vehicle", price: 3000.0, test_drive_fee: 10.0, model: "C-678", year: "2012-01-01")
 car5.image.attach(io: File.open(Rails.root.join('public', 'images', 'renault.png')), filename: 'renault.png')
 car5.save
+ 

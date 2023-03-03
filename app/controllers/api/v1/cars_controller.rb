@@ -9,19 +9,20 @@ class Api::V1::CarsController < ApplicationController
     render json: @car.as_json.merge(image_url: url_for(@car.image)), status: :ok
   end
 
-  #   def create
-  #     @car = Car.new(car_params)
+  def create
+    @car = Car.new(car_params)
+    @car.image.attach(params[:car][:image]) if params[:car][:image].present?
 
-  #     if @car.save
-  #       render json: @car, status: :created
-  #     else
-  #       render json: @car.errors, status: :unprocessable_entity
-  #     end
-  #   end
+    if @car.save
+      render json: @car, status: :created
+    else
+      render json: @car.errors, status: :unprocessable_entity
+    end
+  end
 
-  #   private
+  private
 
-  #   def car_params
-  #     params.require(:car).permit(:name, :description, :price, :test_drive_fee, :model, :year, :image_data)
-  #   end
+  def car_params
+    params.require(:car).permit(:name, :description, :price, :test_drive_fee, :model, :year)
+  end
 end
