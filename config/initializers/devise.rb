@@ -20,16 +20,7 @@ Devise.setup do |config|
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
 
-  config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.secret_key_base
-    jwt.dispatch_requests = [
-      ['POST', %r{^/auth/sign_in$}]
-    ]
-    jwt.revocation_requests = [
-      ['DELETE', %r{^/auth/sign_out$}]
-    ]
-    jwt.expiration_time = 1.day.to_i
-  end
+ 
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -321,4 +312,15 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.secret_key_base
+    jwt.dispatch_requests = [
+      ['POST', %r{^/auth/sign_in$}],
+      ['POST', %r{^/auth/sign_up$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/auth/sign_out$}]
+    ]
+    jwt.expiration_time = 3.day.to_i
+  end
 end

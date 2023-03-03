@@ -1,17 +1,34 @@
-class ApplicationController < ActionController::API
-  include Devise::JWT::Concerns::SetUserByToken
+require 'English'
+require "#{Rails.root}/lib/json_web_token"
 
-  before_action :authenticate_user!
+class ApplicationController < ActionController::API
+  before_action :authenticate_user_if_token_present
   before_action :update_allowed_parameters, if: :devise_controller?
 
-  protected
+  private
+
+  def authenticate_user_if_token_present
+    puts "Authorization header: #{request.headers['Authorization']}"
+
+    token = request.headers['Authorization']&.split(' ')&.last
+    puts "HEYA #{token}"
+    return unless token
+
+    payload = JsonWebToken.decode(token)
+    puts "PAYLOOOOAD #{payload}"
+    user_id = payload['sub']
+    puts "UUUUSERRR #{user_id}"
+    @current_user = User.find_by(id: user_id)
+    puts @current_user
+
+    render json: { error: 'Invalid or expired token' }, status: :unauthorized if @current_user.nil?
+  rescue JWT::ExpiredSignature, JWT::DecodeError
+    puts "JWT error: #{$ERROR_INFO.message}"
+    render json: { error: 'Invalid or expired token' }, status: :unauthorized
+  end
 
   def update_allowed_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email password password_confirmation])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name email password current_password])
-  end
-
-  def current_user
-    @current_user ||= User.find_by(id: payload['sub'])
   end
 end
