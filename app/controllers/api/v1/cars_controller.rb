@@ -4,6 +4,10 @@ class Api::V1::CarsController < ApplicationController
     render json: @cars.map { |car| car.as_json.merge(image_url: url_for(car.image)) }, status: :ok
   end
 
+  def new
+    @car = Car.new
+  end
+
   def show
     @car = Car.with_attached_image.find(params[:id])
     render json: @car.as_json.merge(image_url: url_for(@car.image)), status: :ok
