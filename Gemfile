@@ -18,6 +18,9 @@ gem 'puma', '~> 5.0'
 # Add authentication
 gem 'devise'
 
+#  Add jwt for devise
+gem 'devise-jwt'
+
 # Add active storage
 gem 'activestorage', '~> 7.0', '>= 7.0.4.2'
 
