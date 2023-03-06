@@ -185,14 +185,100 @@ paths:
   "/api/v1/reservations":
     get:
       summary: list reservations
+      tags:
+      - Reservations
+      description: List of Reservations
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    user_id: 1
+                    car_id: 2
+                    reservation_date: '2020-02-02'
+                    duration: 7
+                    city: New York
+                  - id: 2
+                    user_id: 1
+                    car_id: 7
+                    reservation_date: '2020-01-12'
+                    duration: 15.2
+                    city: New York
+                  - id: 3
+                    user_id: 1
+                    car_id: 5
+                    reservation_date: '2020-03-09'
+                    duration: 8
+                    city: New York
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    reservation_date:
+                      type: date
+                    user_id:
+                      type: integer
+                    car_id:
+                      type: integer
+                    duration:
+                      type: float
+                    city:
+                      type: string
+                  required:
+                  - id
+                  - duration
+                  - reservation_date
+                  - user_id
+                  - car_id
+                  - city
     post:
       summary: create reservation
+      description: Creates a new reservation with the provided details
+      tags:
+      - Reservations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer token
+        schema:
+          type: string
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                reservation_date:
+                  type: string
+                  format: date
+                user_id:
+                  type: integer
+                car_id:
+                  type: integer
+                duration:
+                  type: number
+                  format: float
+                city:
+                  type: string
+              required:
+              - id
+              - duration
+              - reservation_date
+              - user_id
+              - car_id
+              - city
   "/api/v1/reservations/{id}":
     parameters:
     - name: id
