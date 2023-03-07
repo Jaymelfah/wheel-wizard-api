@@ -276,7 +276,6 @@ paths:
               - id
               - duration
               - reservation_date
-              - user_id
               - car_id
               - city
   "/api/v1/reservations/{id}":
