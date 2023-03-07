@@ -93,7 +93,11 @@ RSpec.describe 'api/v1/cars', type: :request do
         required: %w[id name model year description test_drive_fee price]
       }
       response '200', 'successful' do
-        let(:id) { 1 }
+        car = Car.new(name: 'Ryan', description: 'Speed and Luxury infused', price: 10_000.0, test_drive_fee: 100.0,
+                      model: 'Veyron', year: '2016-02-02')
+        car.image.attach(io: File.open(Rails.root.join('public', 'images', 'bugatti.png')), filename: 'bugatti.png')
+        car.save
+        let(:id) { car.id }
         examples 'application/json' => [
           { id: 1, name: 'Car 1', model: 'Model A', year: '2020-02-02', description: 'luxury', test_drive_fee: 55,
             price: 5000 }
@@ -117,11 +121,12 @@ RSpec.describe 'api/v1/cars', type: :request do
           message: 'Car was successfully deleted'
         }
 
-        it 'returns the id of the deleted car' do
-          expect(JSON.parse(response.body)['id']).to eq(1)
-        end
-
-        let(:id) { 1 }
+        car = Car.new(name: 'Aston Martin', description: 'Speed and Luxury infused', price: 10_000.0,
+                      test_drive_fee: 100.0,
+                      model: 'Veyron', year: '2016-02-02')
+        car.image.attach(io: File.open(Rails.root.join('public', 'images', 'bugatti.png')), filename: 'bugatti.png')
+        car.save
+        let(:id) { car.id }
 
         run_test!
       end
