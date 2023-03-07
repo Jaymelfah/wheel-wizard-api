@@ -72,7 +72,6 @@ RSpec.describe 'api/v1/cars', type: :request do
   end
 
   path '/api/v1/cars/{id}' do
-    # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('Show a specific Car details') do
@@ -94,7 +93,7 @@ RSpec.describe 'api/v1/cars', type: :request do
         required: %w[id name model year description test_drive_fee price]
       }
       response '200', 'successful' do
-        let(:id) { 1 } # Define id parameter in an example group
+        let(:id) { 1 }
         examples 'application/json' => [
           { id: 1, name: 'Car 1', model: 'Model A', year: '2020-02-02', description: 'luxury', test_drive_fee: 55,
             price: 5000 }

@@ -9,7 +9,7 @@ RSpec.describe 'api/v1/reservations', type: :request do
       produces 'application/json'
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
 
-      let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:user) { FactoryBot.create(:user) }
       let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
 
       response '200', 'successful' do
@@ -41,7 +41,7 @@ RSpec.describe 'api/v1/reservations', type: :request do
       produces 'application/json'
       consumes 'application/json'
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
-      let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:user) { FactoryBot.create(:user) }
       let(:car) { FactoryBot.create(:car) }
       let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
       parameter name: :reservation, in: :body, schema: {
@@ -69,21 +69,19 @@ RSpec.describe 'api/v1/reservations', type: :request do
   end
 
   path '/api/v1/reservations/{id}' do
-    # You'll want to customize the parameter types...
-
     delete('Delete a specific Reservation') do
       tags 'Reservations'
       produces 'application/json'
       consumes 'application/json'
       parameter name: 'id', in: :path, type: :integer, description: 'id of reservation'
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
-      let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:user) { FactoryBot.create(:user) }
       let(:car) { FactoryBot.create(:car) }
       let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
 
       response(200, 'successful') do
         let(:Authorization) { auth_token }
-        let(:id) { reservation.id } # Define the id parameter here
+        let(:id) { reservation.id }
         let(:reservation) { FactoryBot.create(:reservation, user:, car:) }
 
         before do
