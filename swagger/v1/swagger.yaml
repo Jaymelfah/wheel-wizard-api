@@ -6,10 +6,10 @@ info:
 paths:
   "/api/v1/cars":
     get:
-      summary: list cars
+      summary: List all cars
       tags:
       - Cars
-      description: list of cars
+      description: List of cars
       responses:
         '200':
           description: successful
@@ -70,14 +70,26 @@ paths:
                   - test_drive_fee
                   - price
     post:
-      summary: create car
+      summary: Create or Add a Car
       tags:
       - Cars
-      description: Create a car
+      description: Create a Car
       parameters: []
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    name: Car 1
+                    model: Model A
+                    year: '2020-02-02'
+                    description: luxury
+                    test_drive_fee: 55
+                    price: 5000
       requestBody:
         content:
           application/json:
@@ -111,10 +123,11 @@ paths:
       schema:
         type: string
     get:
-      summary: show car
+      summary: Show a specific Car details
       tags:
       - Cars
       description: Display a particular car with id
+      parameters: []
       responses:
         '200':
           description: successful
@@ -130,38 +143,8 @@ paths:
                     description: luxury
                     test_drive_fee: 55
                     price: 5000
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    model:
-                      type: string
-                    year:
-                      type: string
-                      format: date
-                    description:
-                      type: string
-                    test_drive_fee:
-                      type: number
-                      format: float
-                    price:
-                      type: number
-                      format: float
-                  required:
-                  - id
-                  - name
-                  - model
-                  - year
-                  - description
-                  - test_drive_fee
-                  - price
     delete:
-      summary: delete car
+      summary: Delete A specific Car
       tags:
       - Cars
       description: Delete a Car with a particular id
@@ -184,10 +167,16 @@ paths:
                     type: string
   "/api/v1/reservations":
     get:
-      summary: list reservations
+      summary: A List of Users Reservations
       tags:
       - Reservations
       description: List of Reservations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer token
+        schema:
+          type: string
       responses:
         '200':
           description: successful
@@ -239,7 +228,7 @@ paths:
                   - car_id
                   - city
     post:
-      summary: create reservation
+      summary: Create or Add a Reservation
       description: Creates a new reservation with the provided details
       tags:
       - Reservations
@@ -280,23 +269,31 @@ paths:
               - car_id
               - city
   "/api/v1/reservations/{id}":
-    parameters:
-    - name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    get:
-      summary: show reservation
-      responses:
-        '200':
-          description: successful
     delete:
-      summary: delete reservation
+      summary: Delete a specific Reservation
+      tags:
+      - Reservations
+      parameters:
+      - name: id
+        in: path
+        description: id of reservation
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer token
+        schema:
+          type: string
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Reservation deleted successfully
 servers:
 - url: https://{defaultHost}
   variables:

@@ -2,9 +2,9 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v1/cars', type: :request do
   path '/api/v1/cars' do
-    get('list cars') do
+    get('List all cars') do
       tags 'Cars'
-      description 'list of cars'
+      description 'List of cars'
       produces 'application/json'
       response '200', 'successful' do
         schema type: :array, items: {
@@ -32,9 +32,9 @@ RSpec.describe 'api/v1/cars', type: :request do
       end
     end
 
-    post('create car') do
+    post('Create or Add a Car') do
       tags 'Cars'
-      description 'Create a car'
+      description 'Create a Car'
       consumes 'application/json'
       produces 'application/json'
       parameter name: :car, in: :body, schema: {
@@ -51,13 +51,10 @@ RSpec.describe 'api/v1/cars', type: :request do
       }
 
       response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        examples 'application/json' => [
+          { id: 1, name: 'Car 1', model: 'Model A', year: '2020-02-02', description: 'luxury', test_drive_fee: 55,
+            price: 5000 }
+        ]
         run_test!
       end
     end
@@ -67,24 +64,25 @@ RSpec.describe 'api/v1/cars', type: :request do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    get('show car') do
+    get('Show a specific Car details') do
       tags 'Cars'
       description 'Display a particular car with id'
       produces 'application/json'
+
+      parameter name: :car, in: :body, schema: {
+        type: :object,
+        properties: {
+          id: { type: :integer },
+          name: { type: :string },
+          model: { type: :string },
+          year: { type: :string, format: 'date' },
+          description: { type: :string },
+          test_drive_fee: { type: :number, format: 'float' },
+          price: { type: :number, format: 'float' }
+        },
+        required: %w[id name model year description test_drive_fee price]
+      }
       response '200', 'successful' do
-        schema type: :array, items: {
-          type: :object,
-          properties: {
-            id: { type: :integer },
-            name: { type: :string },
-            model: { type: :string },
-            year: { type: :string, format: 'date' },
-            description: { type: :string },
-            test_drive_fee: { type: :number, format: 'float' },
-            price: { type: :number, format: 'float' }
-          },
-          required: %w[id name model year description test_drive_fee price]
-        }
         examples 'application/json' => [
           { id: 1, name: 'Car 1', model: 'Model A', year: '2020-02-02', description: 'luxury', test_drive_fee: 55,
             price: 5000 }
@@ -93,7 +91,7 @@ RSpec.describe 'api/v1/cars', type: :request do
       end
     end
 
-    delete('delete car') do
+    delete('Delete A specific Car') do
       tags 'Cars'
       description 'Delete a Car with a particular id'
       produces 'application/json'

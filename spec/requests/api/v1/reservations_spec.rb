@@ -2,10 +2,12 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v1/reservations', type: :request do
   path '/api/v1/reservations' do
-    get('list reservations') do
+    get('A List of Users Reservations') do
       tags 'Reservations'
       description 'List of Reservations'
       produces 'application/json'
+      parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
+      let(:auth_token) { 'your-bearer-token-here' }
       response '200', 'successful' do
         schema type: :array, items: {
           type: :object,
@@ -28,7 +30,7 @@ RSpec.describe 'api/v1/reservations', type: :request do
       end
     end
 
-    post('create reservation') do
+    post('Create or Add a Reservation') do
       description 'Creates a new reservation with the provided details'
 
       tags 'Reservations'
@@ -80,34 +82,17 @@ RSpec.describe 'api/v1/reservations', type: :request do
 
   path '/api/v1/reservations/{id}' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    get('show reservation') do
+    delete('Delete a specific Reservation') do
+      tags 'Reservations'
+      produces 'application/json'
+      consumes 'application/json'
+      parameter name: 'id', in: :path, type: :integer, description: 'id of reservation'
+      parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
+      let(:auth_token) { 'your-bearer-token-here' }
+
       response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    delete('delete reservation') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        examples 'application/json' => { message: 'Reservation deleted successfully' }
         run_test!
       end
     end
