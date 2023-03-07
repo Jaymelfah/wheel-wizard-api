@@ -42,6 +42,7 @@ RSpec.describe 'api/v1/reservations', type: :request do
       consumes 'application/json'
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
       let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:car) { FactoryBot.create(:car) }
       let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
       parameter name: :reservation, in: :body, schema: {
         type: :object,
@@ -53,20 +54,12 @@ RSpec.describe 'api/v1/reservations', type: :request do
           duration: { type: :number, format: 'float' },
           city: { type: :string }
         },
-        required: %w[id duration reservation_date user_id car_id city]
+        required: %w[id duration reservation_date car_id city]
       }
-      let(:reservation) do
-        {
-          id: 1,
-          reservation_date: '2023-03-07',
-          user_id: 2,
-          car_id: 4,
-          duration: 17,
-          city: 'Johannesburg'
-        }
-      end
-      response(200, 'successful', headers: {}) do
+     
+      response(200, 'successful') do
         let(:Authorization) { auth_token }
+        let(:reservation) { FactoryBot.create(:reservation, user:, car:) }
         examples 'application/json' => [
           { id: 1, user_id: 1, car_id: 2, reservation_date: '2020-02-02', duration: 7, city: 'New York' }
         ]
