@@ -56,7 +56,7 @@ RSpec.describe 'api/v1/reservations', type: :request do
         },
         required: %w[id duration reservation_date car_id city]
       }
-     
+
       response(200, 'successful') do
         let(:Authorization) { auth_token }
         let(:reservation) { FactoryBot.create(:reservation, user:, car:) }
