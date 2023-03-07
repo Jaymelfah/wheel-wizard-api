@@ -83,6 +83,7 @@ RSpec.describe 'api/v1/cars', type: :request do
         required: %w[id name model year description test_drive_fee price]
       }
       response '200', 'successful' do
+        let(:id) { 1 } # Define id parameter in an example group
         examples 'application/json' => [
           { id: 1, name: 'Car 1', model: 'Model A', year: '2020-02-02', description: 'luxury', test_drive_fee: 55,
             price: 5000 }
@@ -101,7 +102,16 @@ RSpec.describe 'api/v1/cars', type: :request do
                  id: { type: :integer },
                  message: { type: :string }
                }
-        examples 'application/json' => { id: 1, message: 'Car was successfully deleted' }
+        examples 'application/json' => {
+          id: 1,
+          message: 'Car was successfully deleted'
+        }
+
+        it 'returns the id of the deleted car' do
+          expect(JSON.parse(response.body)['id']).to eq(1)
+        end
+
+        let(:id) { 1 }
 
         run_test!
       end

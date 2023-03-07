@@ -1,4 +1,5 @@
 require 'swagger_helper'
+require 'jwt'
 
 RSpec.describe 'api/v1/reservations', type: :request do
   path '/api/v1/reservations' do
@@ -7,8 +8,12 @@ RSpec.describe 'api/v1/reservations', type: :request do
       description 'List of Reservations'
       produces 'application/json'
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
-      let(:auth_token) { 'your-bearer-token-here' }
+
+      let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
+
       response '200', 'successful' do
+        let(:Authorization) { auth_token }
         schema type: :array, items: {
           type: :object,
           properties: {
