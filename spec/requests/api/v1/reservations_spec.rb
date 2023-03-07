@@ -37,16 +37,12 @@ RSpec.describe 'api/v1/reservations', type: :request do
 
     post('Create or Add a Reservation') do
       description 'Creates a new reservation with the provided details'
-
       tags 'Reservations'
-
       produces 'application/json'
       consumes 'application/json'
-
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
-
-      let(:auth_token) { 'your-bearer-token-here' }
-
+      let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
       parameter name: :reservation, in: :body, schema: {
         type: :object,
         properties: {
@@ -59,7 +55,6 @@ RSpec.describe 'api/v1/reservations', type: :request do
         },
         required: %w[id duration reservation_date user_id car_id city]
       }
-
       let(:reservation) do
         {
           id: 1,
@@ -70,16 +65,11 @@ RSpec.describe 'api/v1/reservations', type: :request do
           city: 'Johannesburg'
         }
       end
-
       response(200, 'successful', headers: {}) do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-
+        let(:Authorization) { auth_token }
+        examples 'application/json' => [
+          { id: 1, user_id: 1, car_id: 2, reservation_date: '2020-02-02', duration: 7, city: 'New York' }
+        ]
         run_test!
       end
     end
@@ -94,11 +84,24 @@ RSpec.describe 'api/v1/reservations', type: :request do
       consumes 'application/json'
       parameter name: 'id', in: :path, type: :integer, description: 'id of reservation'
       parameter name: 'Authorization', in: :header, type: :string, description: 'Bearer token'
-      let(:auth_token) { 'your-bearer-token-here' }
+      let(:user) { FactoryBot.create(:user) } # FactoryBot example
+      let(:car) { FactoryBot.create(:car) }
+      let(:auth_token) { JsonWebToken.encode({ sub: user.id }) }
 
       response(200, 'successful') do
+        let(:Authorization) { auth_token }
+        let(:id) { reservation.id } # Define the id parameter here
+        let(:reservation) { FactoryBot.create(:reservation, user:, car:) }
+
+        before do
+          allow(Reservation).to receive(:find).with(reservation.id.to_s).and_return(reservation)
+        end
+
         examples 'application/json' => { message: 'Reservation deleted successfully' }
-        run_test!
+
+        run_test! do
+          expect(Reservation.find_by(id: reservation.id)).to be_nil
+        end
       end
     end
   end

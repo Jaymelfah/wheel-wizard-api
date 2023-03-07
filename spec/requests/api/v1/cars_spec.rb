@@ -50,7 +50,18 @@ RSpec.describe 'api/v1/cars', type: :request do
         required: %w[name description price model year]
       }
 
-      response(200, 'successful') do
+      let(:car) do
+        {
+          name: 'Car 1',
+          model: 'Model A',
+          year: '2020-02-02',
+          description: 'luxury',
+          test_drive_fee: 55,
+          price: 5000
+        }
+      end
+
+      response(201, 'successful') do
         examples 'application/json' => [
           { id: 1, name: 'Car 1', model: 'Model A', year: '2020-02-02', description: 'luxury', test_drive_fee: 55,
             price: 5000 }

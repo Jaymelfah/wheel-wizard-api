@@ -76,7 +76,7 @@ paths:
       description: Create a Car
       parameters: []
       responses:
-        '200':
+        '201':
           description: successful
           content:
             application/json:
@@ -241,6 +241,17 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    user_id: 1
+                    car_id: 2
+                    reservation_date: '2020-02-02'
+                    duration: 7
+                    city: New York
       requestBody:
         content:
           application/json:
