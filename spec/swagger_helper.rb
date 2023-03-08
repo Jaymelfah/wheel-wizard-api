@@ -1,5 +1,17 @@
 require 'rails_helper'
 
+# Require the registrations_spec.rb file
+require Rails.root.join('spec', 'requests', 'api', 'v1', 'registrations_spec.rb').to_s
+
+# Require the sessions_spec.rb file
+require Rails.root.join('spec', 'requests', 'api', 'v1', 'sessions_spec.rb').to_s
+
+# Require the cars_spec.rb file
+require Rails.root.join('spec', 'requests', 'api', 'v1', 'cars_spec.rb').to_s
+
+# Require the reservations_spec.rb file
+require Rails.root.join('spec', 'requests', 'api', 'v1', 'reservations_spec.rb').to_s
+
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need

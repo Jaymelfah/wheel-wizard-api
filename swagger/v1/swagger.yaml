@@ -4,6 +4,72 @@ info:
   title: API V1
   version: v1
 paths:
+  "/users":
+    post:
+      summary: Sign Up a new User
+      tags:
+      - Sign up
+      description: Sign up a new user
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Sign up successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+              - name
+              - email
+              - password
+              - password_confirmation
+  "/users/sign_in":
+    post:
+      summary: Sign In
+      tags:
+      - Sign In
+      description: Sign In
+      parameters: []
+      responses:
+        '201':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 1
+                    name: Jay
+                    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjF9.eLvmI-jvl7iBj2Kix4Kor20Nwur4F53KuB1NayRYJaQ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
   "/api/v1/cars":
     get:
       summary: List all cars
