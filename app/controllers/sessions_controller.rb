@@ -7,7 +7,7 @@ class SessionsController < Devise::SessionsController
       token = JsonWebToken.encode({ sub: user.id })
       decoded_token = JsonWebToken.decode(token)
       @current_user = User.find_by(id: decoded_token['sub'])
-      render json: { token: }, status: :created
+      render json: { id: @current_user.id, name: @current_user.name, token: }, status: :created
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
