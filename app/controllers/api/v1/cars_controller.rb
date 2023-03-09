@@ -1,7 +1,10 @@
 class Api::V1::CarsController < ApplicationController
   def index
     @cars = Car.with_attached_image.all
-    render json: @cars.map { |car| car.as_json.merge(image_url: url_for(car.image)) }, status: :ok
+    render json: @cars.map { |car|
+      image_url = car.image.attached? ? url_for(car.image) : nil
+      car.as_json.merge(image_url:)
+    }, status: :ok
   end
 
   def new
