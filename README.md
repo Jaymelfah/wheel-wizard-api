@@ -47,8 +47,7 @@
 
 
 ### Live Demo
-Coming soon...
-<!-- This is a [live]() demo of the application -->
+ This is running live on [render](https://wheel-wizard.onrender.com/).
 
 <!-- Features -->
 
