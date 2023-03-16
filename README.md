@@ -112,6 +112,11 @@ To run the project, execute the following command:
 - Run 'rails s' to start the dev server
 > Read the documentation of the [API](http://localhost:3000/api-docs)
 
+### Tests 
+
+To run the tests, execute the following command
+- Run 'rspec spec' to run all the tests.
+
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 <!-- AUTHORS -->
