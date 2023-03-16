@@ -48,7 +48,8 @@
 ### Kanban Board
 This is a [Link](https://github.com/users/Jaymelfah/projects/4) to our Kanban Board
 
-This is the initial state of our Kanban board
+This is the initial state of our Kanban board![image (1)](https://user-images.githubusercontent.com/106558709/225645735-121fe7ba-3a9e-48c1-8f89-767757fa4a83.png)
+
 
 
 ### Live Demo
