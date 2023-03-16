@@ -51,6 +51,12 @@ This is a [Link](https://github.com/users/Jaymelfah/projects/4) to our Kanban Bo
 This is the initial state of our Kanban board![image (1)](https://user-images.githubusercontent.com/106558709/225645735-121fe7ba-3a9e-48c1-8f89-767757fa4a83.png)
 
 
+### ERD Diagram
+![image (2)](https://user-images.githubusercontent.com/106558709/225650093-ce5f7d71-10ce-4942-b9b2-c23eeefd2995.png)
+
+
+
+
 
 ### Live Demo
  This is running live on [render](https://wheel-wizard.onrender.com/).
