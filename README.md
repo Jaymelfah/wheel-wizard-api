@@ -45,6 +45,11 @@
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
+### Kanban Board
+This is a [Link](https://github.com/users/Jaymelfah/projects/4) to our Kanban Board
+
+This is the initial state of our Kanban board
+
 
 ### Live Demo
  This is running live on [render](https://wheel-wizard.onrender.com/).
