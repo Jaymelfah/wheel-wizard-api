@@ -1,0 +1,377 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users":
+    post:
+      summary: Sign Up a new User
+      tags:
+      - Sign up
+      description: Sign up a new user
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Sign up successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+              required:
+              - name
+              - email
+              - password
+              - password_confirmation
+  "/users/sign_in":
+    post:
+      summary: Sign In
+      tags:
+      - Sign In
+      description: Sign In
+      parameters: []
+      responses:
+        '201':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 1
+                    name: Jay
+                    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjF9.eLvmI-jvl7iBj2Kix4Kor20Nwur4F53KuB1NayRYJaQ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/api/v1/cars":
+    get:
+      summary: List all cars
+      tags:
+      - Cars
+      description: List of cars
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    name: Car 1
+                    model: Model A
+                    year: '2020-02-02'
+                    description: luxury
+                    test_drive_fee: 55
+                    price: 5000
+                  - id: 2
+                    name: Car 2
+                    model: Model B
+                    year: '2020-02-02'
+                    description: luxury
+                    test_drive_fee: 55
+                    price: 8000
+                  - id: 3
+                    name: Car 3
+                    model: Model C
+                    year: '2020-02-02'
+                    description: luxury
+                    test_drive_fee: 55
+                    price: 3000
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    model:
+                      type: string
+                    year:
+                      type: string
+                      format: date
+                    description:
+                      type: string
+                    test_drive_fee:
+                      type: number
+                      format: float
+                    price:
+                      type: number
+                      format: float
+                  required:
+                  - id
+                  - name
+                  - model
+                  - year
+                  - description
+                  - test_drive_fee
+                  - price
+    post:
+      summary: Create or Add a Car
+      tags:
+      - Cars
+      description: Create a Car
+      parameters: []
+      responses:
+        '201':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    name: Car 1
+                    model: Model A
+                    year: '2020-02-02'
+                    description: luxury
+                    test_drive_fee: 55
+                    price: 5000
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                test_drive_fee:
+                  type: number
+                model:
+                  type: string
+                year:
+                  type: integer
+              required:
+              - name
+              - description
+              - price
+              - model
+              - year
+  "/api/v1/cars/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show a specific Car details
+      tags:
+      - Cars
+      description: Display a particular car with id
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    name: Car 1
+                    model: Model A
+                    year: '2020-02-02'
+                    description: luxury
+                    test_drive_fee: 55
+                    price: 5000
+    delete:
+      summary: Delete A specific Car
+      tags:
+      - Cars
+      description: Delete a Car with a particular id
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 1
+                    message: Car was successfully deleted
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+  "/api/v1/reservations":
+    get:
+      summary: A List of Users Reservations
+      tags:
+      - Reservations
+      description: List of Reservations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    user_id: 1
+                    car_id: 2
+                    reservation_date: '2020-02-02'
+                    duration: 7
+                    city: New York
+                  - id: 2
+                    user_id: 1
+                    car_id: 7
+                    reservation_date: '2020-01-12'
+                    duration: 15.2
+                    city: New York
+                  - id: 3
+                    user_id: 1
+                    car_id: 5
+                    reservation_date: '2020-03-09'
+                    duration: 8
+                    city: New York
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    reservation_date:
+                      type: date
+                    user_id:
+                      type: integer
+                    car_id:
+                      type: integer
+                    duration:
+                      type: float
+                    city:
+                      type: string
+                  required:
+                  - id
+                  - duration
+                  - reservation_date
+                  - user_id
+                  - car_id
+                  - city
+    post:
+      summary: Create or Add a Reservation
+      description: Creates a new reservation with the provided details
+      tags:
+      - Reservations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                  - id: 1
+                    user_id: 1
+                    car_id: 2
+                    reservation_date: '2020-02-02'
+                    duration: 7
+                    city: New York
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                reservation_date:
+                  type: string
+                  format: date
+                user_id:
+                  type: integer
+                car_id:
+                  type: integer
+                duration:
+                  type: number
+                  format: float
+                city:
+                  type: string
+              required:
+              - id
+              - duration
+              - reservation_date
+              - car_id
+              - city
+  "/api/v1/reservations/{id}":
+    delete:
+      summary: Delete a specific Reservation
+      tags:
+      - Reservations
+      parameters:
+      - name: id
+        in: path
+        description: id of reservation
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Reservation deleted successfully
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
